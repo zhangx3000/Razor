@@ -3,6 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+using Microsoft.AspNet.HtmlContent;
+using Microsoft.Framework.WebEncoders;
 using Microsoft.Framework.Internal;
 
 namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
@@ -12,14 +16,19 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
     /// </summary>
     public class DefaultTagHelperContent : TagHelperContent
     {
-        private readonly BufferEntryCollection _buffer;
+        private BufferedHtmlContent _innerContent;
 
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DefaultTagHelperContent"/>.
-        /// </summary>
-        public DefaultTagHelperContent()
+        private BufferedHtmlContent InnerContent
         {
-            _buffer = new BufferEntryCollection();
+            get
+            {
+                if (_innerContent == null)
+                {
+                    _innerContent = new BufferedHtmlContent();
+                }
+
+                return _innerContent;
+            }
         }
 
         /// <inheritdoc />
@@ -27,7 +36,7 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         {
             get
             {
-                return _buffer.IsModified;
+                return _innerContent != null;
             }
         }
 
@@ -36,9 +45,15 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         {
             get
             {
-                foreach (var value in _buffer)
+                if (_innerContent == null)
                 {
-                    if (!string.IsNullOrWhiteSpace(value))
+                    return true;
+                }
+
+                foreach (var value in _innerContent)
+                {
+                    var stringValue = value as string;
+                    if (stringValue == null || !string.IsNullOrWhiteSpace(stringValue))
                     {
                         return false;
                     }
@@ -53,9 +68,15 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         {
             get
             {
-                foreach (var value in _buffer)
+                if (_innerContent == null)
                 {
-                    if (!string.IsNullOrEmpty(value))
+                    return true;
+                }
+
+                foreach (var value in _innerContent)
+                {
+                    var stringValue = value as string;
+                    if (stringValue == null || !string.IsNullOrEmpty(stringValue))
                     {
                         return false;
                     }
@@ -73,47 +94,60 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             return this;
         }
 
-        /// <inheritdoc />
-        public override TagHelperContent SetContent(TagHelperContent tagHelperContent)
+        public override TagHelperContent SetContent(IHtmlContent htmlContent)
         {
             Clear();
-            Append(tagHelperContent);
+            Append(htmlContent);
             return this;
         }
-
 
         /// <inheritdoc />
         public override TagHelperContent Append(string value)
         {
-            _buffer.Add(value);
+            InnerContent.Append(value);
+            return this;
+        }
+
+        public override TagHelperContent Append(IHtmlContent htmlContent)
+        {
+            var defaultTagHelperContext = htmlContent as DefaultTagHelperContent;
+            if (defaultTagHelperContext == null)
+            {
+                InnerContent.Append(htmlContent);
+            }
+            else
+            {
+                InnerContent.Append(defaultTagHelperContext._innerContent);
+            }
+
             return this;
         }
 
         /// <inheritdoc />
         public override TagHelperContent AppendFormat([NotNull] string format, object arg0)
         {
-            _buffer.Add(string.Format(format, arg0));
+            InnerContent.Append(string.Format(format, arg0));
             return this;
         }
 
         /// <inheritdoc />
         public override TagHelperContent AppendFormat([NotNull] string format, object arg0, object arg1)
         {
-            _buffer.Add(string.Format(format, arg0, arg1));
+            InnerContent.Append(string.Format(format, arg0, arg1));
             return this;
         }
 
         /// <inheritdoc />
         public override TagHelperContent AppendFormat([NotNull] string format, object arg0, object arg1, object arg2)
         {
-            _buffer.Add(string.Format(format, arg0, arg1, arg2));
+            InnerContent.Append(string.Format(format, arg0, arg1, arg2));
             return this;
         }
 
         /// <inheritdoc />
         public override TagHelperContent AppendFormat([NotNull] string format, params object[] args)
         {
-            _buffer.Add(string.Format(format, args));
+            InnerContent.Append(string.Format(format, args));
             return this;
         }
 
@@ -123,7 +157,7 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             [NotNull] string format,
             object arg0)
         {
-            _buffer.Add(string.Format(provider, format, arg0));
+            InnerContent.Append(string.Format(provider, format, arg0));
             return this;
         }
 
@@ -134,7 +168,7 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             object arg0,
             object arg1)
         {
-            _buffer.Add(string.Format(provider, format, arg0, arg1));
+            InnerContent.Append(string.Format(provider, format, arg0, arg1));
             return this;
         }
 
@@ -146,7 +180,7 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             object arg1,
             object arg2)
         {
-            _buffer.Add(string.Format(provider, format, arg0, arg1, arg2));
+            InnerContent.Append(string.Format(provider, format, arg0, arg1, arg2));
             return this;
         }
 
@@ -156,43 +190,21 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             [NotNull] string format,
             params object[] args)
         {
-            _buffer.Add(string.Format(provider, format, args));
-            return this;
-        }
-
-        /// <inheritdoc />
-        public override TagHelperContent Append(TagHelperContent tagHelperContent)
-        {
-            if (tagHelperContent != null)
-            {
-                foreach (var value in tagHelperContent)
-                {
-                    Append(value);
-                }
-            }
-
-            // If Append() was called with an empty TagHelperContent IsModified should
-            // still be true. If the content was not already modified, it means it is empty.
-            // So the Clear() method can be used to indirectly set the IsModified.
-            if (!IsModified)
-            {
-                Clear();
-            }
-
+            InnerContent.Append(string.Format(provider, format, args));
             return this;
         }
 
         /// <inheritdoc />
         public override TagHelperContent Clear()
         {
-            _buffer.Clear();
+            InnerContent.Clear();
             return this;
         }
 
         /// <inheritdoc />
         public override string GetContent()
         {
-            return string.Join(string.Empty, _buffer);
+            return string.Join(string.Empty, InnerContent);
         }
 
         /// <inheritdoc />
@@ -202,11 +214,21 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         }
 
         /// <inheritdoc />
-        public override IEnumerator<string> GetEnumerator()
+        public override IEnumerator<object> GetEnumerator()
         {
             // The enumerator is exposed so that SetContent(TagHelperContent) and Append(TagHelperContent)
             // can use this to iterate through the values of the buffer.
-            return _buffer.GetEnumerator();
+            if (_innerContent == null)
+            {
+                return Enumerable.Empty<object>().GetEnumerator();
+            }
+
+            return _innerContent.GetEnumerator();
+        }
+
+        public override void WriteTo(TextWriter writer, IHtmlEncoder encoder)
+        {
+            _innerContent.WriteTo(writer, encoder);
         }
     }
 }

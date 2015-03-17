@@ -3,8 +3,12 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
+using System.IO;
 using Microsoft.AspNet.Testing;
+using Microsoft.Framework.WebEncoders;
+#if !DNXCORE50
+using Moq;
+#endif
 using Xunit;
 
 namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
@@ -298,7 +302,6 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
 
             // Assert
             Assert.Equal(expected, copiedTagHelperContent.GetContent());
-            Assert.Equal(new[] { text1, text2 }, copiedTagHelperContent.ToArray());
         }
 
         [Fact]
@@ -507,6 +510,46 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             // Assert
             Assert.True(tagHelperContent.IsEmpty);
         }
+
+        // CopyTo
+        [Fact]
+        public void CanWriteToTextWriter()
+        {
+            // Arrange
+            var writer = new StringWriter();
+            var tagHelperContent = new DefaultTagHelperContent();
+            var expected = "Hello World!";
+            tagHelperContent.SetContent(expected);
+
+            // Act
+            tagHelperContent.WriteTo(writer, new HtmlEncoder());
+
+            // Assert
+            Assert.Equal(expected, writer.ToString());
+        }
+
+#if !DNXCORE50
+        [Fact]
+        public void CanWriteToTextWriter_MultipleAppends()
+        {
+            // Arrange
+            var writer = new Mock<StringWriter>();
+            writer.CallBase = true;
+            var tagHelperContent = new DefaultTagHelperContent();
+            var text1 = "Hello";
+            var text2 = " World!";
+            var expected = text1 + text2;
+            tagHelperContent.Append(text1);
+            tagHelperContent.Append(text2);
+
+            // Act
+            tagHelperContent.WriteTo(writer.Object, new HtmlEncoder());
+
+            // Assert
+            Assert.Equal(expected, writer.Object.ToString());
+            writer.Verify(w => w.Write(It.IsAny<string>()), Times.Exactly(2));
+        }
+#endif
 
         [Fact]
         public void ToString_ReturnsExpectedValue()
