@@ -6,36 +6,36 @@ namespace Microsoft.AspNet.HtmlContent
 {
     public class StringHtmlContent : IHtmlContent
     {
-        public static readonly StringHtmlContent Empty = new StringHtmlContent(string.Empty, encoded: true);
+        public static readonly StringHtmlContent Empty = new StringHtmlContent(string.Empty, encodeOnWrite: true);
 
-        private bool _encoded;
+        private bool _encodeOnWrite;
         private string _text;
 
         public static StringHtmlContent FromEncodedText(string text)
         {
-            return new StringHtmlContent(text, encoded: true);
+            return new StringHtmlContent(text, encodeOnWrite: true);
         }
 
         public StringHtmlContent(string text)
-            : this(text, encoded: false)
+            : this(text, encodeOnWrite: false)
         {
         }
 
-        protected StringHtmlContent(string text, bool encoded)
+        protected StringHtmlContent(string text, bool encodeOnWrite)
         {
             _text = text;
-            _encoded = encoded;
+            _encodeOnWrite = encodeOnWrite;
         }
 
         public void WriteTo(TextWriter writer, IHtmlEncoder encoder)
         {
-            if (_encoded)
+            if (_encodeOnWrite)
             {
-                writer.Write(_text);
+                encoder.HtmlEncode(_text, writer);
             }
             else
             {
-                encoder.HtmlEncode(_text, writer);
+                writer.Write(_text);
             }
         }
 

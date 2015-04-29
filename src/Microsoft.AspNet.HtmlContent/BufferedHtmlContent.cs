@@ -19,6 +19,11 @@ namespace Microsoft.AspNet.HtmlContent
             }
         }
 
+        public void Append(char value)
+        {
+            _entries.Add(value.ToString());
+        }
+
         public void Append(IHtmlContent htmlContent)
         {
             var bufferedHtmlContext = htmlContent as BufferedHtmlContent;
@@ -52,8 +57,7 @@ namespace Microsoft.AspNet.HtmlContent
                 var entryAsString = entry as string;
                 if (entryAsString != null)
                 {
-                    encoder.HtmlEncode(entryAsString, writer);
-
+                    writer.Write(entryAsString);
                 }
                 else
                 {
@@ -65,9 +69,16 @@ namespace Microsoft.AspNet.HtmlContent
 
         public override string ToString()
         {
-            var writer = new StringWriter();
-            WriteTo(writer, new HtmlEncoder());
-            return writer.ToString();
+            return ToString(new HtmlEncoder());
+        }
+
+        public string ToString(IHtmlEncoder encoder)
+        {
+            using (var writer = new StringWriter())
+            {
+                WriteTo(writer, encoder);
+                return writer.ToString();
+            }
         }
 
         public IEnumerator<object> GetEnumerator()
