@@ -137,7 +137,7 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         /// Tracks the minimized HTML attribute in <see cref="AllAttributes"/> and <see cref="HTMLAttributes"/>.
         /// </summary>
         /// <param name="name">The minimized HTML attribute name.</param>
-        public void AddHtmlAttribute([NotNull] string name)
+        public void AddMinimizedHtmlAttribute([NotNull] string name)
         {
             HTMLAttributes.Add(
                 new TagHelperAttribute

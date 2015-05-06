@@ -43,10 +43,6 @@ namespace TestOutput
             __InputTagHelper.BoundRequiredString = "world";
             __CatchAllTagHelper = CreateTagHelper<CatchAllTagHelper>();
             __CatchAllTagHelper = CreateTagHelper<CatchAllTagHelper>();
-            __InputTagHelper = CreateTagHelper<InputTagHelper>();
-            __InputTagHelper.BoundRequiredString = "hello";
-            __CatchAllTagHelper = CreateTagHelper<CatchAllTagHelper>();
-            __CatchAllTagHelper = CreateTagHelper<CatchAllTagHelper>();
         }
         #pragma warning restore 1998
     }

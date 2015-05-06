@@ -344,16 +344,24 @@ namespace Microsoft.AspNet.Razor.Generator.Compiler.CSharp
                     continue;
                 }
 
-                _writer
-                    .WriteStartInstanceMethodInvocation(
-                        ExecutionContextVariableName,
-                        _tagHelperContext.ExecutionContextAddHtmlAttributeMethodName)
-                    .WriteStringLiteral(htmlAttribute.Key);
-
-                // If we have a minimized attribute we don't want to provide a value
-                if (attributeValue != null)
+                // If we have a minimized attribute there is no value
+                if (attributeValue == null)
                 {
-                    _writer.WriteParameterSeparator()
+                    _writer
+                        .WriteStartInstanceMethodInvocation(
+                            ExecutionContextVariableName,
+                            _tagHelperContext.ExecutionContextAddMinimizedHtmlAttributeMethodName)
+                        .WriteStringLiteral(htmlAttribute.Key)
+                        .WriteEndMethodInvocation();
+                }
+                else
+                {
+                    _writer
+                        .WriteStartInstanceMethodInvocation(
+                            ExecutionContextVariableName,
+                            _tagHelperContext.ExecutionContextAddHtmlAttributeMethodName)
+                        .WriteStringLiteral(htmlAttribute.Key)
+                        .WriteParameterSeparator()
                         .WriteStartMethodInvocation(_tagHelperContext.MarkAsHtmlEncodedMethodName);
 
                     // If it's a plain text value then we need to surround the value with quotes.
@@ -366,10 +374,9 @@ namespace Microsoft.AspNet.Razor.Generator.Compiler.CSharp
                         RenderBufferedAttributeValueAccessor(_writer);
                     }
 
-                    _writer.WriteEndMethodInvocation(endLine: false);
+                    _writer.WriteEndMethodInvocation(endLine: false)
+                        .WriteEndMethodInvocation();
                 }
-
-                _writer.WriteEndMethodInvocation();
             }
         }
 

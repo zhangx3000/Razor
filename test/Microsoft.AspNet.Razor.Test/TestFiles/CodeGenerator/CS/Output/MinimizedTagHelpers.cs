@@ -1,4 +1,4 @@
-#pragma checksum "MinimizedTagHelpers.cshtml" "{ff1816ec-aa5e-4d10-87f7-6f4963833460}" "7f14019f4a6379e79a646ac5ac48607013a8f886"
+#pragma checksum "MinimizedTagHelpers.cshtml" "{ff1816ec-aa5e-4d10-87f7-6f4963833460}" "07839be4304797e30b19b50b95e2247c93cdff06"
 namespace TestOutput
 {
     using Microsoft.AspNet.Razor.Runtime.TagHelpers;
@@ -36,7 +36,7 @@ namespace TestOutput
                 __CatchAllTagHelper = CreateTagHelper<CatchAllTagHelper>();
                 __tagHelperExecutionContext.Add(__CatchAllTagHelper);
                 __tagHelperExecutionContext.AddHtmlAttribute("class", Html.Raw("btn"));
-                __tagHelperExecutionContext.AddHtmlAttribute("catchall-unbound-required");
+                __tagHelperExecutionContext.AddMinimizedHtmlAttribute("catchall-unbound-required");
                 __tagHelperExecutionContext.Output = await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
                 await WriteTagHelperAsync(__tagHelperExecutionContext);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
@@ -51,8 +51,8 @@ namespace TestOutput
                 __CatchAllTagHelper = CreateTagHelper<CatchAllTagHelper>();
                 __tagHelperExecutionContext.Add(__CatchAllTagHelper);
                 __tagHelperExecutionContext.AddHtmlAttribute("class", Html.Raw("btn"));
-                __tagHelperExecutionContext.AddHtmlAttribute("catchall-unbound-required");
-                __tagHelperExecutionContext.AddHtmlAttribute("input-unbound-required");
+                __tagHelperExecutionContext.AddMinimizedHtmlAttribute("catchall-unbound-required");
+                __tagHelperExecutionContext.AddMinimizedHtmlAttribute("input-unbound-required");
                 __tagHelperExecutionContext.Output = await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
                 await WriteTagHelperAsync(__tagHelperExecutionContext);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
@@ -69,8 +69,8 @@ namespace TestOutput
                 __CatchAllTagHelper.BoundRequiredString = "world";
                 __tagHelperExecutionContext.AddTagHelperAttribute("catchall-bound-string", __CatchAllTagHelper.BoundRequiredString);
                 __tagHelperExecutionContext.AddHtmlAttribute("class", Html.Raw("btn"));
-                __tagHelperExecutionContext.AddHtmlAttribute("catchall-unbound-required");
-                __tagHelperExecutionContext.AddHtmlAttribute("input-unbound-required");
+                __tagHelperExecutionContext.AddMinimizedHtmlAttribute("catchall-unbound-required");
+                __tagHelperExecutionContext.AddMinimizedHtmlAttribute("input-unbound-required");
                 __tagHelperExecutionContext.Output = await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
                 await WriteTagHelperAsync(__tagHelperExecutionContext);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
@@ -87,39 +87,7 @@ namespace TestOutput
                 __tagHelperExecutionContext.AddHtmlAttribute("class", Html.Raw("btn"));
                 __tagHelperExecutionContext.AddHtmlAttribute("catchall-unbound-required", Html.Raw("hello"));
                 __tagHelperExecutionContext.AddHtmlAttribute("input-unbound-required", Html.Raw("hello2"));
-                __tagHelperExecutionContext.AddHtmlAttribute("catchall-unbound-required");
-                __tagHelperExecutionContext.Output = await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
-                await WriteTagHelperAsync(__tagHelperExecutionContext);
-                __tagHelperExecutionContext = __tagHelperScopeManager.End();
-                WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", true, "test", async() => {
-                }
-                , StartTagHelperWritingScope, EndTagHelperWritingScope);
-                __CatchAllTagHelper = CreateTagHelper<CatchAllTagHelper>();
-                __tagHelperExecutionContext.Add(__CatchAllTagHelper);
-                __tagHelperExecutionContext.AddHtmlAttribute("nottaghelper");
-                __tagHelperExecutionContext.AddHtmlAttribute("class", Html.Raw("btn"));
-                __tagHelperExecutionContext.AddHtmlAttribute("catchall-unbound-required");
-                __tagHelperExecutionContext.AddHtmlAttribute("input-unbound-required");
-                __tagHelperExecutionContext.AddHtmlAttribute("bound-string", Html.Raw("hello"));
-                __tagHelperExecutionContext.Output = await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
-                await WriteTagHelperAsync(__tagHelperExecutionContext);
-                __tagHelperExecutionContext = __tagHelperScopeManager.End();
-                WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", true, "test", async() => {
-                }
-                , StartTagHelperWritingScope, EndTagHelperWritingScope);
-                __InputTagHelper = CreateTagHelper<InputTagHelper>();
-                __tagHelperExecutionContext.Add(__InputTagHelper);
-                __InputTagHelper.BoundRequiredString = "hello";
-                __tagHelperExecutionContext.AddTagHelperAttribute("input-bound-required-string", __InputTagHelper.BoundRequiredString);
-                __CatchAllTagHelper = CreateTagHelper<CatchAllTagHelper>();
-                __tagHelperExecutionContext.Add(__CatchAllTagHelper);
-                __tagHelperExecutionContext.AddHtmlAttribute("nottaghelper");
-                __tagHelperExecutionContext.AddHtmlAttribute("class", Html.Raw("btn"));
-                __tagHelperExecutionContext.AddHtmlAttribute("catchall-unbound-required");
-                __tagHelperExecutionContext.AddHtmlAttribute("input-unbound-required");
-                __tagHelperExecutionContext.AddHtmlAttribute("input-unbound-required", Html.Raw("world"));
+                __tagHelperExecutionContext.AddMinimizedHtmlAttribute("catchall-unbound-required");
                 __tagHelperExecutionContext.Output = await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
                 await WriteTagHelperAsync(__tagHelperExecutionContext);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
@@ -128,7 +96,7 @@ namespace TestOutput
             , StartTagHelperWritingScope, EndTagHelperWritingScope);
             __CatchAllTagHelper = CreateTagHelper<CatchAllTagHelper>();
             __tagHelperExecutionContext.Add(__CatchAllTagHelper);
-            __tagHelperExecutionContext.AddHtmlAttribute("catchall-unbound-required");
+            __tagHelperExecutionContext.AddMinimizedHtmlAttribute("catchall-unbound-required");
             __tagHelperExecutionContext.Output = await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
             await WriteTagHelperAsync(__tagHelperExecutionContext);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();

@@ -42,11 +42,10 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         public object Value { get; set; }
 
         /// <summary>
-        /// Gets or sets the value indicating if the attribute is minimized.
+        /// Gets or sets an indication whether the attribute is minimized or not.
         /// </summary>
         /// <remarks>If <c>true</c>, <see cref="Value"/> will be ignored.</remarks>
         public bool Minimized { get; set; }
-
 
         /// <summary>
         /// Converts the specified <paramref name="value"/> into a <see cref="TagHelperAttribute"/>.
@@ -68,8 +67,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             return
                 other != null &&
                 string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase) &&
-                Equals(Value, other.Value) &&
-                Minimized == other.Minimized;
+                Minimized == other.Minimized &&
+                (Minimized || Equals(Value, other.Value));
         }
 
         /// <inheritdoc />

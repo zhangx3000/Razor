@@ -1904,10 +1904,9 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
                         "@{<!text /}",
                         buildPartialStatementBlock(
                             () => new MarkupBlock(
-                                new MarkupTagBlock(
-                                    factory.Markup("<"),
-                                    factory.BangEscape(),
-                                    factory.Markup("text /"),
+                                blockFactory.EscapedMarkupTagBlock(
+                                    "<", 
+                                    "text /", 
                                     new MarkupBlock(factory.Markup("}"))))),
                         new []
                         {
@@ -2113,12 +2112,7 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
                         "@{<!p /}",
                         buildPartialStatementBlock(
                             () => new MarkupBlock(
-                                new MarkupTagBlock(
-                                    factory.Markup("<"),
-                                    factory.BangEscape(),
-                                    factory.Markup("p /"),
-                                    new MarkupBlock(
-                                        factory.Markup("}"))))),
+                                blockFactory.EscapedMarkupTagBlock("<", "p /", new MarkupBlock(factory.Markup("}"))))),
                         new []
                         {
                             new RazorError(

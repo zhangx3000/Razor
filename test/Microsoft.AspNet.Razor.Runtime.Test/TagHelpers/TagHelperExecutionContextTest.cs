@@ -181,7 +181,7 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         }
 
         [Fact]
-        public void AddHtmlAttribute_MaintainsHTMLAttributes_Unminimized()
+        public void AddHtmlAttribute_MaintainsHTMLAttributes()
         {
             // Arrange
             var executionContext = new TagHelperExecutionContext("p", selfClosing: false);
@@ -203,7 +203,7 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         }
 
         [Fact]
-        public void AddHtmlAttribute_MaintainsHTMLAttributes_Minimized()
+        public void AddMinimizedHtmlAttribute_MaintainsHTMLAttributes()
         {
             // Arrange
             var executionContext = new TagHelperExecutionContext("input", selfClosing: true);
@@ -214,8 +214,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             };
 
             // Act
-            executionContext.AddHtmlAttribute("checked");
-            executionContext.AddHtmlAttribute("visible");
+            executionContext.AddMinimizedHtmlAttribute("checked");
+            executionContext.AddMinimizedHtmlAttribute("visible");
 
             // Assert
             Assert.Equal(
@@ -225,7 +225,7 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         }
 
         [Fact]
-        public void AddHtmlAttribute_MaintainsHTMLAttributes_Mixed()
+        public void AddMinimizedHtmlAttribute_MaintainsHTMLAttributes_SomeMinimized()
         {
             // Arrange
             var executionContext = new TagHelperExecutionContext("input", selfClosing: true);
@@ -240,8 +240,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             // Act
             executionContext.AddHtmlAttribute("class", "btn");
             executionContext.AddHtmlAttribute("foo", "bar");
-            executionContext.AddHtmlAttribute("checked");
-            executionContext.AddHtmlAttribute("visible");
+            executionContext.AddMinimizedHtmlAttribute("checked");
+            executionContext.AddMinimizedHtmlAttribute("visible");
 
             // Assert
             Assert.Equal(

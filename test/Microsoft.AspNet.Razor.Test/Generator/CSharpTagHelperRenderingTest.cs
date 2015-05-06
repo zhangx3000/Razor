@@ -19,7 +19,7 @@ namespace Microsoft.AspNet.Razor.Test.Generator
         private static IEnumerable<TagHelperDescriptor> PrefixedPAndInputTagHelperDescriptors
             => BuildPAndInputTagHelperDescriptors("THS");
 
-        private static IEnumerable<TagHelperDescriptor> MinimizedTagHelperDescriptors
+        private static IEnumerable<TagHelperDescriptor> MinimizedTagHelpers_Descriptors
         {
             get
             {
@@ -249,15 +249,15 @@ namespace Microsoft.AspNet.Razor.Test.Generator
                     {
                         "MinimizedTagHelpers",
                         "MinimizedTagHelpers",
-                        MinimizedTagHelperDescriptors,
-                        MinimizedTagHelperDescriptors,
+                        MinimizedTagHelpers_Descriptors,
+                        MinimizedTagHelpers_Descriptors,
                         false
                     },
                     {
                         "MinimizedTagHelpers",
                         "MinimizedTagHelpers.DesignTime",
-                        MinimizedTagHelperDescriptors,
-                        MinimizedTagHelperDescriptors,
+                        MinimizedTagHelpers_Descriptors,
+                        MinimizedTagHelpers_Descriptors,
                         true
                     }
                 };

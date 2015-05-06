@@ -14,7 +14,7 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
 {
     public class TagHelperRewritingTestBase : CsHtmlMarkupParserTestBase
     {
-        protected void RunParseTreeRewriterTest(
+        public void RunParseTreeRewriterTest(
             string documentContent,
             MarkupBlock expectedOutput,
             params string[] tagNames)
@@ -26,7 +26,7 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
                 tagNames: tagNames);
         }
 
-        protected void RunParseTreeRewriterTest(
+        public void RunParseTreeRewriterTest(
             string documentContent,
             MarkupBlock expectedOutput,
             IEnumerable<RazorError> errors,
@@ -37,7 +37,7 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
             EvaluateData(providerContext, documentContent, expectedOutput, errors);
         }
 
-        protected TagHelperDescriptorProvider BuildProviderContext(params string[] tagNames)
+        public TagHelperDescriptorProvider BuildProviderContext(params string[] tagNames)
         {
             var descriptors = new List<TagHelperDescriptor>();
 
@@ -59,7 +59,7 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
             return base.CreateParserContext(input, codeParser, markupParser, errorSink);
         }
 
-        protected void EvaluateData(
+        public void EvaluateData(
             TagHelperDescriptorProvider provider,
             string documentContent,
             MarkupBlock expectedOutput,
@@ -77,7 +77,7 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
             EvaluateParseTree(rewritten, expectedOutput);
         }
 
-        protected static SpanFactory CreateDefaultSpanFactory()
+        public static SpanFactory CreateDefaultSpanFactory()
         {
             return new SpanFactory
             {
