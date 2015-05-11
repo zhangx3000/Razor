@@ -202,6 +202,13 @@ namespace Microsoft.AspNet.Razor.Generator.Compiler.CSharp
                     // First attribute wins, even if there's duplicates.
                     var attributeValueChunk = matchingAttributes.First().Value;
 
+                    // Minimized attributes are not valid for bound attributes. There will be an error logged for this
+                    // bound attribute already so we can skip.
+                    if (attributeValueChunk == null)
+                    {
+                        continue;
+                    }
+
                     var attributeValueRecorded = htmlAttributeValues.ContainsKey(attributeDescriptor.Name);
 
                     // Bufferable attributes are attributes that can have Razor code inside of them.

@@ -471,9 +471,13 @@ namespace Microsoft.AspNet.Razor.Parser
                 return;
             }
 
-            // Minimized attribute
             if (!At(HtmlSymbolType.Equals))
             {
+                // Minimized attribute
+
+                // Output anything prior to the attribute, in most cases this will be the tag name:
+                // |<input| checked />. If in-between other attributes this will noop or output malformed attribute
+                // content (if the previous attribute was malformed).
                 Output(SpanKind.Markup);
 
                 using (Context.StartBlock(BlockType.Markup))
@@ -485,6 +489,9 @@ namespace Microsoft.AspNet.Razor.Parser
 
                 return;
             }
+
+            // Not a minimized attribute, parse as if it were well-formed (if attribute turns out to be malformed we
+            // will go into recovery).
 
             Output(SpanKind.Markup);
 

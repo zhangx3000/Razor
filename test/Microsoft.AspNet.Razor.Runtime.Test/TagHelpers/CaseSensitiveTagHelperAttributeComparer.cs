@@ -21,8 +21,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
                 attributeX == attributeY ||
                 // Normal comparer doesn't care about the Name case, in tests we do.
                 string.Equals(attributeX.Name, attributeY.Name, StringComparison.Ordinal) &&
-                Equals(attributeX.Value, attributeY.Value) &&
-                attributeX.Minimized == attributeY.Minimized;
+                attributeX.Minimized == attributeY.Minimized &&
+                (attributeX.Minimized || Equals(attributeX.Value, attributeY.Value));
         }
 
         public int GetHashCode(IReadOnlyTagHelperAttribute attribute)

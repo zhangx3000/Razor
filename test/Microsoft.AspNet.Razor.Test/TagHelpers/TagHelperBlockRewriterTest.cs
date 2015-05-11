@@ -328,78 +328,6 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                         }
                     },
                     {
-                        "<input class='btn' unbound-required class='btn2' />",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "input",
-                                selfClosing: true,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn")),
-                                    new KeyValuePair<string, SyntaxTreeNode>("unbound-required", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn2")),
-                                })),
-                        noErrors
-                    },
-                    {
-                        "<p class='btn' bound-string class='btn2'></p>",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "p",
-                                selfClosing: false,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn")),
-                                    new KeyValuePair<string, SyntaxTreeNode>("bound-string", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn2")),
-                                })),
-                        new[]
-                        {
-                            new RazorError(
-                                string.Format(errorFormat, "bound-string", "p", stringType),
-                                absoluteIndex: 15,
-                                lineIndex: 0,
-                                columnIndex: 15,
-                                length: 12)
-                        }
-                    },
-                    {
-                        $"<input class='{expressionString}' unbound-required class='{expressionString}' />",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "input",
-                                selfClosing: true,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
-                                    new KeyValuePair<string, SyntaxTreeNode>("unbound-required", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
-                                })),
-                        noErrors
-                    },
-                    {
-                        $"<p class='{expressionString}' bound-string class='{expressionString}'></p>",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "p",
-                                selfClosing: false,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
-                                    new KeyValuePair<string, SyntaxTreeNode>("bound-string", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
-                                })),
-                        new[]
-                        {
-                            new RazorError(
-                                string.Format(errorFormat, "bound-string", "p", stringType),
-                                absoluteIndex: 29,
-                                lineIndex: 0,
-                                columnIndex: 29,
-                                length: 12)
-                        }
-                    },
-                    {
                         "<input bound-required-string class='btn' />",
                         new MarkupBlock(
                             new MarkupTagHelperBlock(
@@ -472,50 +400,6 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                                 {
                                     new KeyValuePair<string, SyntaxTreeNode>("class", expression),
                                     new KeyValuePair<string, SyntaxTreeNode>("bound-required-string", null),
-                                })),
-                        new[]
-                        {
-                            new RazorError(
-                                string.Format(errorFormat, "bound-required-string", "input", stringType),
-                                absoluteIndex: 33,
-                                lineIndex: 0,
-                                columnIndex: 33,
-                                length: 21)
-                        }
-                    },
-                    {
-                        "<input class='btn' bound-required-string class='btn2' />",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "input",
-                                selfClosing: true,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn")),
-                                    new KeyValuePair<string, SyntaxTreeNode>("bound-required-string", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn2")),
-                                })),
-                        new[]
-                        {
-                            new RazorError(
-                                string.Format(errorFormat, "bound-required-string", "input", stringType),
-                                absoluteIndex: 19,
-                                lineIndex: 0,
-                                columnIndex: 19,
-                                length: 21)
-                        }
-                    },
-                    {
-                        $"<input class='{expressionString}' bound-required-string class='{expressionString}' />",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "input",
-                                selfClosing: true,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
-                                    new KeyValuePair<string, SyntaxTreeNode>("bound-required-string", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
                                 })),
                         new[]
                         {
@@ -652,76 +536,6 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                                 {
                                     new KeyValuePair<string, SyntaxTreeNode>("class", expression),
                                     new KeyValuePair<string, SyntaxTreeNode>("bound-int", null),
-                                })),
-                        new[]
-                        {
-                            new RazorError(string.Format(errorFormat, "bound-int", "p", intType), 29, 0, 29, 9)
-                        }
-                    },
-                    {
-                        "<input class='btn' bound-required-int class='btn2' />",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "input",
-                                selfClosing: true,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn")),
-                                    new KeyValuePair<string, SyntaxTreeNode>("bound-required-int", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn2")),
-                                })),
-                        new[]
-                        {
-                            new RazorError(
-                                string.Format(errorFormat, "bound-required-int", "input", intType), 19, 0, 19, 18)
-                        }
-                    },
-                    {
-                        "<p class='btn' bound-int class='btn2'></p>",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "p",
-                                selfClosing: false,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn")),
-                                    new KeyValuePair<string, SyntaxTreeNode>("bound-int", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", factory.Markup("btn2")),
-                                })),
-                        new[]
-                        {
-                            new RazorError(string.Format(errorFormat, "bound-int", "p", intType), 15, 0, 15, 9)
-                        }
-                    },
-                    {
-                        $"<input class='{expressionString}' bound-required-int class='{expressionString}' />",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "input",
-                                selfClosing: true,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
-                                    new KeyValuePair<string, SyntaxTreeNode>("bound-required-int", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
-                                })),
-                        new[]
-                        {
-                            new RazorError(
-                                string.Format(errorFormat, "bound-required-int", "input", intType), 33, 0, 33, 18)
-                        }
-                    },
-                    {
-                        $"<p class='{expressionString}' bound-int class='{expressionString}'></p>",
-                        new MarkupBlock(
-                            new MarkupTagHelperBlock(
-                                "p",
-                                selfClosing: false,
-                                attributes: new List<KeyValuePair<string, SyntaxTreeNode>>()
-                                {
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
-                                    new KeyValuePair<string, SyntaxTreeNode>("bound-int", null),
-                                    new KeyValuePair<string, SyntaxTreeNode>("class", expression),
                                 })),
                         new[]
                         {
