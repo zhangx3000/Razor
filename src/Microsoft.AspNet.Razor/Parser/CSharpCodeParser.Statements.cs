@@ -424,7 +424,7 @@ namespace Microsoft.AspNet.Razor.Parser
                 PutCurrentBack();
 
                 // Don't putback the whitespace if it precedes a '<text>' tag.
-                if (!nextSymbol.Content.Equals(SyntaxConstants.TextTagName))
+                if (nextSymbol != null && !nextSymbol.Content.Equals(SyntaxConstants.TextTagName))
                 {
                     PutBack(lastWhitespace);
                 }

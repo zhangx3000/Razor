@@ -78,7 +78,7 @@ namespace Microsoft.AspNet.Razor.Test.Generator
         [InlineData("ConditionalAttributes")]
         [InlineData("ResolveUrl")]
         [InlineData("Await")]
-        [InlineData("SimpleCodeBlock")]
+        [InlineData("CodeBlockWithTextElement")]
         public void CSharpCodeGeneratorCorrectlyGeneratesRunTimeCode(string testType)
         {
             RunTest(testType);
